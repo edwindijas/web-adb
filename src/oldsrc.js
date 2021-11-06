@@ -1,6 +1,8 @@
 const { exec } = require("child_process");
 const http = require('http');
-const openBrowser = require('./openBrowser')
+//const openBrowser = require('./openBrowser')
+
+const adb = "./adb/adb-mac"
 
 const runOnDevice = (device) => {
   const doExtra = (function () {
@@ -67,12 +69,12 @@ const runOnDevice = (device) => {
     doExtra(stderr);
   };
 
-  exec(`./adb -s ${device} reverse tcp:3000 tcp:3000`, callBack);
-  exec(`./adb -s ${device} reverse tcp:8080 tcp:8080`, callBack);
-  exec(`./adb -s ${device} forward tcp:9222 localabstract:chrome_devtools_remote`, callBack);
+  exec(`${adb} -s ${device} reverse tcp:3000 tcp:3000`, callBack);
+  exec(`${adb} -s ${device} reverse tcp:8080 tcp:8080`, callBack);
+  exec(`${adb} -s ${device} forward tcp:9222 localabstract:chrome_devtools_remote`, callBack);
 
   if (doExtra() === '') {
-    exec(`./adb -s ${device} shell am start -n com.android.chrome/com.google.android.apps.chrome.Main -d 'http://localhost:3000/'`, callBack);
+    exec(`${adb} -s ${device} shell am start -n com.android.chrome/com.google.android.apps.chrome.Main -d 'http://localhost:3000/'`, callBack);
   } else {
     console.log(doExtra());
   }
@@ -80,7 +82,7 @@ const runOnDevice = (device) => {
 
 const getDevices = () => {
   return new Promise((resolve, reject) => {
-    exec("./adb devices", function (error, stdout, stderr) {
+    exec(`${adb} devices`, function (error, stdout, stderr) {
       const lines = stdout.trim().split(/\n/g).filter(a => a.trim() !== '');
       lines.splice(0, 1);
       resolve(lines.map(line => {
