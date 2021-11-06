@@ -4,6 +4,8 @@ const http = require('http');
 
 const adb = "./adb/adb-mac"
 
+const ports = [8080, 3000];
+
 const runOnDevice = (device) => {
   const doExtra = (function () {
     let errs = '', count = 0;
@@ -51,7 +53,7 @@ const runOnDevice = (device) => {
   const getTarget = (data) => {
     let x;
     for (x = 0; x < data.length; x++) {
-      if (data[x].url.indexOf('http://localhost:3000') === 0) {
+      if (data[x].url.indexOf('http://localhost:8080') === 0) {
         break;
       }
     }
@@ -69,12 +71,14 @@ const runOnDevice = (device) => {
     doExtra(stderr);
   };
 
-  exec(`${adb} -s ${device} reverse tcp:3000 tcp:3000`, callBack);
-  exec(`${adb} -s ${device} reverse tcp:8080 tcp:8080`, callBack);
+  ports.forEach((port) => {
+    exec(`${adb} -s ${device} reverse tcp:${port} tcp:${port}`, callBack);
+  });
+
   exec(`${adb} -s ${device} forward tcp:9222 localabstract:chrome_devtools_remote`, callBack);
 
   if (doExtra() === '') {
-    exec(`${adb} -s ${device} shell am start -n com.android.chrome/com.google.android.apps.chrome.Main -d 'http://localhost:3000/'`, callBack);
+    exec(`${adb} -s ${device} shell am start -n com.android.chrome/com.google.android.apps.chrome.Main -d 'http://localhost:8080/'`, callBack);
   } else {
     console.log(doExtra());
   }
