@@ -1,0 +1,18 @@
+{
+  "author": {
+    "name": "Edwin Dijas Chiwona"
+  },
+  "description": "",
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
+  "dependencies": {
+    "appium-adb": "^8.16.2"
+  },
+  "devDependencies": {
+    "@types/appium-adb": "^8.16.0",
+    "ts-loader": "^9.2.6",
+    "webpack": "^5.61.0",
+    "webpack-cli": "^4.9.1"
+  }
+}
