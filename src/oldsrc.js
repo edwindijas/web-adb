@@ -102,3 +102,8 @@ devices.then(response => {
     runOnDevice(device);
   })
 });
+
+
+if (devices.length === 0) {
+  console.log("no devices found, connect android phone with android debug turned on.");
+}
