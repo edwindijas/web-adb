@@ -1,3 +1,5 @@
+//Deprecated
+
 const { exec } = require("child_process");
 const http = require('http');
 //const openBrowser = require('./openBrowser')
