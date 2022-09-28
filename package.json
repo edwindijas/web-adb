@@ -1,18 +1,28 @@
 {
+  "name": "w32and",
   "author": {
     "name": "Edwin Dijas Chiwona"
   },
   "description": "",
   "scripts": {
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development --watch"
   },
   "dependencies": {
-    "appium-adb": "^8.16.2"
+    "appium-adb": "^8.18.0",
+    "chalk": "^5.0.1",
+    "express": "^4.18.1",
+    "open": "^8.4.0"
   },
   "devDependencies": {
     "@types/appium-adb": "^8.16.0",
-    "ts-loader": "^9.2.6",
-    "webpack": "^5.61.0",
-    "webpack-cli": "^4.9.1"
-  }
+    "copy-webpack-plugin": "^11.0.0",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.8.3",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "license": "ISC",
+  "version": "1.0.0",
+  "bin": "cli.js"
 }
